@@ -1,0 +1,29 @@
+<input
+  type="number"
+  name="betValue"
+  id="betValue"
+  placeholder="Ange summa..."
+  [(ngModel)]="betValue"
+/>
+<button (click)="handleStartGame()">Satsa</button>
+<h2>Player:</h2>
+@for (card of playerHand; track $index) {
+
+<img [src]="'Assets/Images/' + card.suite + '_' + card.value">
+<p>{{ card.suite }}</p>
+<p>{{ card.value }}</p>
+<p>{{ card.isFaceUp }}</p>
+}
+
+<hr />
+<h2>Dealer:</h2>
+@for (card of dealerHand; track $index) {
+
+
+<p>{{ card.suite }}</p>
+<p>{{ card.value }}</p>
+<p>{{ card.isFaceUp }}</p>
+}
+
+<button (click)="handleHit()">Hit</button>
+
