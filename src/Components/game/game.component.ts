@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BlackjackService } from '../../Service/blackjack.service';
-import { Card } from '../../Models/Card';
+import { BlackjackService } from '../../service/blackjack.service';
+import { Card } from '../../models/Card';
 
 @Component({
   selector: 'app-game',
@@ -11,21 +11,27 @@ import { Card } from '../../Models/Card';
   templateUrl: './game.component.html',
   styleUrl: './game.component.css',
 })
-export class GameComponent {
+export class GameComponent implements OnInit {
   playerHand: Card[] = [];
   dealerHand: Card[] = [];
   betValue: number = 0;
+  isGameOver: boolean = false;
+  winner: string = "";
 
   constructor(private blackjackService: BlackjackService) {}
+  ngOnInit(): void {
+    this.handleStartGame();
+  }
 
   handleStartGame(): void {
     this.blackjackService.startGame(this.betValue).subscribe({
       next: (res: any) => {
         this.playerHand = res.player.handOfCards;
         this.dealerHand = res.dealer.handOfCards;
-        console.log(res.dealer.handOfCards, res.player.handOfCards);
+        this.isGameOver = res.isGameOver;
+        console.log(res);
       },
-      error: (err: Error) => {
+      error: (err) => {
         console.log(err);
       },
     });
@@ -35,18 +41,29 @@ export class GameComponent {
     this.blackjackService.Hit().subscribe({
       next: (res: any) => {
         this.playerHand = res.player.handOfCards;
+        this.isGameOver = res.isGameOver;
+        this.winner = res.winner;
         console.log(res);
       },
-      error: (err: Error) => {
+      error: (err) => {
         console.log(err);
       },
     });
   }
+
+  handleStand(): void {
+    this.blackjackService.Stand().subscribe({
+      next: (res) => {
+        this.dealerHand = res.dealer.handOfCards;
+        this.isGameOver = res.isGameOver;
+        this.winner = res.winner;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+
+
 }
-
-//What are the files named? If it's like 10D.jpg for 10 of diamonds, QH.jpg for queen of hearts, you could just make a function that turns it into the right filename..
-
-//const cardImage = (card) => `/images/${card}.jpg`
-
-//<img [src]="this.cardURL"/>
-//[cardURL]="'./assets/cards/' + userCard + '.png'"

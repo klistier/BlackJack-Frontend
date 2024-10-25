@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Card } from '../Models/Card';
+import { Card } from '../models/Card';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -16,5 +16,9 @@ export class BlackjackService {
 
   public Hit(): Observable<any> {
     return this.http.post<any>(`${this.url}/hit`, {});
+  }
+
+  public Stand(): Observable<any> {
+    return this.http.post<any>(`${this.url}/stand`, {});
   }
 }
