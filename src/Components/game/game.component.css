@@ -1,10 +1,45 @@
-.cardContainer{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.gameContainer {
+  background-image: url('/assets/Blackjack_Table_Background.png');
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-img{
-    height: 20vh;
-    margin-right: 10px;
+.cardContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+img {
+  height: 20vh;
+  margin-right: 10px;
+}
+
+.playerButtons {
+  display: flex;
+  justify-content: center;
+}
+
+.gameBtn {
+  width: 100px;
+  margin: 10px 10px;
+  padding: 0.75rem 1rem;
+  border: 0;
+  border-radius: 0.317rem;
+  background-color: #d40d0d;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.5;
+  cursor: pointer;
+  -webkit-font-smoothing: antialiased;
+}
+
+.gameBtn:hover {
+  opacity: 0.85;
 }

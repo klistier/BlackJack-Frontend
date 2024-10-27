@@ -15,8 +15,10 @@ export class GameComponent implements OnInit {
   playerHand: Card[] = [];
   dealerHand: Card[] = [];
   betValue: number = 0;
+  playerHandValue = 0;
+  dealerHandValue = 0;
   isGameOver: boolean = false;
-  winner: string = "";
+  winner: string = '';
 
   constructor(private blackjackService: BlackjackService) {}
   ngOnInit(): void {
@@ -29,6 +31,8 @@ export class GameComponent implements OnInit {
         this.playerHand = res.player.handOfCards;
         this.dealerHand = res.dealer.handOfCards;
         this.isGameOver = res.isGameOver;
+        this.dealerHandValue = res.dealer.handValue;
+        this.playerHandValue = res.player.handValue;
         console.log(res);
       },
       error: (err) => {
@@ -43,6 +47,8 @@ export class GameComponent implements OnInit {
         this.playerHand = res.player.handOfCards;
         this.isGameOver = res.isGameOver;
         this.winner = res.winner;
+        this.dealerHandValue = res.dealer.handValue;
+        this.playerHandValue = res.player.handValue;
         console.log(res);
       },
       error: (err) => {
@@ -57,13 +63,12 @@ export class GameComponent implements OnInit {
         this.dealerHand = res.dealer.handOfCards;
         this.isGameOver = res.isGameOver;
         this.winner = res.winner;
+        this.dealerHandValue = res.dealer.handValue;
+        console.log(res.winner, res.isGameOver, res.dealer.handValue);
       },
       error: (err) => {
         console.log(err);
       },
     });
   }
-
-
-
 }

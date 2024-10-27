@@ -1,41 +1,43 @@
-<input
-  type="number"
-  name="betValue"
-  id="betValue"
-  placeholder="Ange summa..."
-  [(ngModel)]="betValue"
-/>
-<button (click)="handleStartGame()">Satsa</button>
+<div class="gameContainer">
+  <input
+    type="number"
+    name="betValue"
+    id="betValue"
+    placeholder="Ange summa..."
+    [(ngModel)]="betValue"
+  />
+  <button (click)="handleStartGame()">Satsa</button>
 
+  <h4>Player: {{ playerHandValue }}</h4>
 
+  <div class="cardContainer">
+    @for (card of playerHand; track $index) {
+    <img
+      [src]="'assets/' + card.suite + '_' + card.value + '.png'"
+      alt="spelkort"
+    />
+    }
+  </div>
+  <hr />
 
-<div class="cardContainer">
-@for (card of playerHand; track $index) {
-<img
-  [src]="'assets/' + card.suite + '_' + card.value + '.png'"
-  alt="spelkort"
-/>
+  <div class="cardContainer">
+    @for (card of dealerHand; track $index) {
+    <img
+      [src]="'assets/' + card.suite + '_' + card.value + '.png'"
+      alt="spelkort"
+    />
+    }
+  </div>
 
-}
-</div>
-<hr />
+  <div class="playerButtons">
+    <button (click)="handleHit()" class="gameBtn">Hit</button>
+    <button (click)="handleStand()" class="gameBtn">Stand</button>
+  </div>
 
+  <h4>Dealer: {{ dealerHandValue }}</h4>
 
-<div class="cardContainer">
-@for (card of dealerHand; track $index) {
-<img
-  [src]="'assets/' + card.suite + '_' + card.value + '.png'"
-  alt="spelkort"
-/>
-}
-</div>
-
-<div class="playerButtons">
-<button (click)="handleHit()">Hit</button>
-<button (click)="handleStand()" >Stand</button>
-</div>
-
-@if (isGameOver) {
+  @if (isGameOver) {
   <h1>GAME OVER!</h1>
-  <h1>{{winner}} vinner!</h1>
-}
+  <h1>{{ winner }} vinner!</h1>
+  }
+</div>
