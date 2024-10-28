@@ -1,5 +1,5 @@
 .gameContainer {
-  background-image: url('/assets/Blackjack_Table_Background.png');
+  background-color: rgb(14, 87, 14);
   background-size: cover;
   height: 100vh;
   display: flex;
@@ -8,10 +8,26 @@
   justify-content: center;
 }
 
+.betInput {
+  height: 30px;
+  width: 140px;
+  text-align: center;
+}
+
 .cardContainer {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.playingCard:hover {
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+hr{
+  color: white;
+  height: 1px;
+  width: 100vw;
 }
 
 img {
@@ -42,4 +58,9 @@ img {
 
 .gameBtn:hover {
   opacity: 0.85;
+}
+
+.yellow{
+  background-color: rgb(197, 197, 9);
+  color: rgb(255, 255, 255);
 }

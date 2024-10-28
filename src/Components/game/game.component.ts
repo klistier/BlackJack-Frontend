@@ -11,29 +11,41 @@ import { Card } from '../../models/Card';
   templateUrl: './game.component.html',
   styleUrl: './game.component.css',
 })
-export class GameComponent implements OnInit {
+export class GameComponent {
+  canBet: boolean = true;
   playerHand: Card[] = [];
   dealerHand: Card[] = [];
   betValue: number = 0;
+  playerCurrency: number = 0;
   playerHandValue = 0;
   dealerHandValue = 0;
   isGameOver: boolean = false;
+  isGameTied: boolean = false;
   winner: string = '';
 
   constructor(private blackjackService: BlackjackService) {}
   ngOnInit(): void {
-    this.handleStartGame();
+    this.handleGetGame();
+  }
+
+  handleGetGame(): void {
+    this.blackjackService.GetGame().subscribe({
+      next: (res: any) => {
+        this.playerCurrency = res.player.currency;
+      },
+    });
   }
 
   handleStartGame(): void {
-    this.blackjackService.startGame(this.betValue).subscribe({
+    this.canBet = false;
+    this.blackjackService.StartGame(this.betValue).subscribe({
       next: (res: any) => {
         this.playerHand = res.player.handOfCards;
         this.dealerHand = res.dealer.handOfCards;
         this.isGameOver = res.isGameOver;
+        this.playerCurrency = res.player.currency;
         this.dealerHandValue = res.dealer.handValue;
         this.playerHandValue = res.player.handValue;
-        console.log(res);
       },
       error: (err) => {
         console.log(err);
@@ -44,11 +56,13 @@ export class GameComponent implements OnInit {
   handleHit(): void {
     this.blackjackService.Hit().subscribe({
       next: (res: any) => {
+        this.handleEndGame();
         this.playerHand = res.player.handOfCards;
         this.isGameOver = res.isGameOver;
         this.winner = res.winner;
         this.dealerHandValue = res.dealer.handValue;
         this.playerHandValue = res.player.handValue;
+        this.isGameTied = res.isATie;
         console.log(res);
       },
       error: (err) => {
@@ -60,15 +74,31 @@ export class GameComponent implements OnInit {
   handleStand(): void {
     this.blackjackService.Stand().subscribe({
       next: (res) => {
+        this.handleEndGame();
         this.dealerHand = res.dealer.handOfCards;
         this.isGameOver = res.isGameOver;
         this.winner = res.winner;
+        this.isGameTied = res.isATie;
         this.dealerHandValue = res.dealer.handValue;
-        console.log(res.winner, res.isGameOver, res.dealer.handValue);
       },
       error: (err) => {
         console.log(err);
       },
     });
+  }
+
+  handleEndGame(): void {
+    this.blackjackService.EndGame(this.betValue).subscribe({
+      next: (res) => {
+        this.playerCurrency = res.player.currency;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  playAgain(): void {
+    this.canBet = true;
   }
 }

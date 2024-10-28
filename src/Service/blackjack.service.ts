@@ -10,7 +10,11 @@ export class BlackjackService {
   private url = 'https://localhost:7200/api/game';
   constructor(private http: HttpClient) {}
 
-  public startGame(betValue: number): Observable<any> {
+  public GetGame(): Observable<any> {
+    return this.http.post<any>(`${this.url}/get-game`, {});
+  }
+
+  public StartGame(betValue: number): Observable<any> {
     return this.http.post<any>(`${this.url}/start-game`, { betValue });
   }
 
@@ -20,5 +24,9 @@ export class BlackjackService {
 
   public Stand(): Observable<any> {
     return this.http.post<any>(`${this.url}/stand`, {});
+  }
+
+  public EndGame(betValue: number): Observable<any> {
+    return this.http.post<any>(`${this.url}/end-game`, { betValue });
   }
 }
