@@ -16,7 +16,7 @@ export class GameComponent {
   playerHand: Card[] = [];
   dealerHand: Card[] = [];
   betValue: number = 0;
-  playerCurrency: number = 0;
+  playerCurrency: number = 1000;
   playerHandValue = 0;
   dealerHandValue = 0;
   isGameOver: boolean = false;
@@ -24,17 +24,6 @@ export class GameComponent {
   winner: string = '';
 
   constructor(private blackjackService: BlackjackService) {}
-  ngOnInit(): void {
-    this.handleGetGame();
-  }
-
-  handleGetGame(): void {
-    this.blackjackService.GetGame().subscribe({
-      next: (res: any) => {
-        this.playerCurrency = res.player.currency;
-      },
-    });
-  }
 
   handleStartGame(): void {
     this.canBet = false;
@@ -46,6 +35,7 @@ export class GameComponent {
         this.playerCurrency = res.player.currency;
         this.dealerHandValue = res.dealer.handValue;
         this.playerHandValue = res.player.handValue;
+        console.log(res.player.currency);
       },
       error: (err) => {
         console.log(err);
@@ -58,12 +48,13 @@ export class GameComponent {
       next: (res: any) => {
         this.handleEndGame();
         this.playerHand = res.player.handOfCards;
+        this.dealerHand = res.dealer.handOfCards;
         this.isGameOver = res.isGameOver;
         this.winner = res.winner;
         this.dealerHandValue = res.dealer.handValue;
         this.playerHandValue = res.player.handValue;
         this.isGameTied = res.isATie;
-        console.log(res);
+        console.log(res.player.currency);
       },
       error: (err) => {
         console.log(err);
@@ -100,5 +91,7 @@ export class GameComponent {
 
   playAgain(): void {
     this.canBet = true;
+    this.isGameTied = false;
+    this.betValue = 0;
   }
 }
