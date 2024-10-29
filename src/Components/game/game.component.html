@@ -1,15 +1,20 @@
 <div class="gameContainer">
   @if(canBet) {
-  <input
-    type="number"
-    name="betValue"
-    id="betValue"
-    placeholder="Place bet..."
-    [(ngModel)]="betValue"
-    class="betInput"
-  />
-  <button (click)="handleStartGame()" class="gameBtn yellow">Place bet</button>}
-  @else {
+  <h1 class="gameTitle">Blackjack</h1>
+  <div class="inputContainer">
+    <input
+      type="number"
+      name="betValue"
+      id="betValue"
+      placeholder="Place bet..."
+      [(ngModel)]="betValue"
+      class="betInput"
+    />
+    <button (click)="handleStartGame()" class="gameBtn yellow">
+      Place bet
+    </button>
+  </div>
+  } @else {
   <div class="cardContainer">
     @for (card of dealerHand; track $index) { @if(!card.isFaceUp) {
     <img
@@ -25,9 +30,11 @@
     />} }
   </div>
 
-  <h4>Dealer: {{ dealerHandValue }}</h4>
-  <hr />
-  <h4>Player: {{ playerHandValue }}</h4>
+  <div class="currentHands">
+    <h4>Dealer: {{ dealerHandValue }}</h4>
+    <hr />
+    <h4>Player: {{ playerHandValue }}</h4>
+  </div>
 
   <div class="cardContainer">
     @for (card of playerHand; track $index) {
@@ -52,6 +59,8 @@
   </div>
   }}
 
-  <p>Balance: {{ playerCurrency }}$</p> 
-  <p>Current bet: {{betValue}} </p>
+  <div class="currencyContainer">
+    <p>Balance: {{ playerCurrency }}$</p>
+    <p>Current bet: {{ betValue }}</p>
+  </div>
 </div>

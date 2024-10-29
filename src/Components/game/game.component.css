@@ -8,6 +8,13 @@
   justify-content: center;
 }
 
+.gameTitle{
+  font-size: 45px;
+  font-family: "Kanit", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
 .betInput {
   height: 30px;
   width: 140px;
@@ -20,11 +27,27 @@
   align-items: center;
 }
 
+.cardContainer,
+.gameTitle,
+.currentHands,
+.currencyContainer,
+.playerButtons,
+.inputContainer {
+  animation: fadeIn 1s forwards;
+}
+
+.currentHands {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .playingCard:hover {
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.12);
 }
 
-hr{
+hr {
   color: white;
   height: 1px;
   width: 100vw;
@@ -60,7 +83,17 @@ img {
   opacity: 0.85;
 }
 
-.yellow{
+.yellow {
   background-color: rgb(197, 197, 9);
   color: rgb(255, 255, 255);
+}
+
+/*Animations*/
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
